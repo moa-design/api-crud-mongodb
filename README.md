@@ -1,11 +1,13 @@
-🛒 API RESTful CRUD - Node.js + MongoDB
-📌 Descripción
+API RESTful CRUD - Node.js + MongoDB
+
+Descripción
 
 Este proyecto consiste en el desarrollo de una API RESTful utilizando Node.js, Express y MongoDB (Mongoose), que permite gestionar productos, categorías y usuarios.
 
 La aplicación implementa operaciones CRUD (Crear, Leer, Actualizar y Eliminar) y aplica una arquitectura basada en separación de responsabilidades mediante capas de Controllers y Services.
 
-🚀 Tecnologías utilizadas
+Tecnologías utilizadas
+
 Node.js
 Express.js
 MongoDB
@@ -14,7 +16,7 @@ bcryptjs (encriptación de contraseñas)
 JSON Web Token (JWT)
 dotenv
 cors
-🗂️ Estructura del proyecto
+Estructura del proyecto
 proyecto-crud-mongodb/
 │── app.js
 │── package.json
@@ -41,11 +43,12 @@ proyecto-crud-mongodb/
     │   └── userRoute.js
     └── middleware/
         └── verifyToken.js
-🧠 Modelo de Datos
-📦 Categoría
+
+Modelo de Datos
+Categoría
 name: String (requerido)
 description: String
-🛍️ Producto
+Producto
 name: String
 description: String
 price: Number
@@ -55,27 +58,15 @@ category: ObjectId (referencia a Categoría)
 name: String
 email: String (único)
 password: String (encriptada)
-🔐 Autenticación
+Autenticación
 
 El sistema implementa autenticación mediante JWT.
 
 Registro de usuario
 Login con generación de token
 Middleware de verificación de token para rutas protegidas
-⚙️ Instalación y ejecución
-Clonar el repositorio:
-git clone https://github.com/TU-USUARIO/TU-REPO.git
-cd proyecto-crud-mongodb
-Instalar dependencias:
-npm install
-Crear archivo .env:
-PORT=3000
-MONGODB_URI=mongodb://127.0.0.1:27017/proyectoCrud
-JWT_SECRET=123456
-Ejecutar el proyecto:
-npm run dev
-📡 Endpoints
-👤 Usuarios
+Endpoints
+Usuarios
 Registro
 
 POST /api/users/register
@@ -93,7 +84,7 @@ POST /api/users/login
   "email": "usuario@mail.com",
   "password": "123456"
 }
-📂 Categorías
+Categorías
 Crear
 
 POST /api/categories
@@ -114,7 +105,7 @@ Eliminar
 
 DELETE /api/categories/
 
-🛒 Productos
+Productos
 Crear
 
 POST /api/products
@@ -130,7 +121,7 @@ Obtener todos
 
 GET /api/products
 
-👉 Incluye populate de categoría
+Incluye populate de categoría
 
 Obtener por ID
 
@@ -144,7 +135,8 @@ Eliminar
 
 DELETE /api/products/
 
-🔥 Características principales
+Características principales
+
 CRUD completo de productos y categorías
 Relación entre entidades (Producto → Categoría)
 Uso de populate para datos relacionados
@@ -152,25 +144,6 @@ Encriptación de contraseñas con bcrypt
 Autenticación con JWT
 Arquitectura modular (Controllers + Services)
 Manejo de errores y códigos HTTP
-🧪 Ejemplos de uso
-Crear categoría
-{
-  "name": "Electrónica",
-  "description": "Productos tecnológicos"
-}
-Crear producto
-{
-  "name": "Mouse Gamer",
-  "description": "RGB",
-  "price": 25000,
-  "stock": 10,
-  "category": "ID_CATEGORIA"
-}
-📌 Notas
-No se incluye el archivo .env por seguridad.
-Se proporciona .env.example como referencia.
-Las rutas protegidas requieren token en headers:
-Authorization: Bearer TOKEN
-👨‍💻 Autor
+
 
 Desarrollado por Agustín Federico Moa
