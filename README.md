@@ -1,22 +1,29 @@
-API RESTful CRUD - Node.js + MongoDB
+# API RESTful CRUD - Node.js + MongoDB
 
-Descripción
+## Descripción
 
 Este proyecto consiste en el desarrollo de una API RESTful utilizando Node.js, Express y MongoDB (Mongoose), que permite gestionar productos, categorías y usuarios.
 
 La aplicación implementa operaciones CRUD (Crear, Leer, Actualizar y Eliminar) y aplica una arquitectura basada en separación de responsabilidades mediante capas de Controllers y Services.
 
-Tecnologías utilizadas
+---
 
-Node.js
-Express.js
-MongoDB
-Mongoose
-bcryptjs (encriptación de contraseñas)
-JSON Web Token (JWT)
-dotenv
-cors
-Estructura del proyecto
+## Tecnologías utilizadas
+
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- bcryptjs (encriptación de contraseñas)
+- JSON Web Token (JWT)
+- dotenv
+- cors
+
+---
+
+## Estructura del proyecto
+
+```
 proyecto-crud-mongodb/
 │── app.js
 │── package.json
@@ -43,107 +50,155 @@ proyecto-crud-mongodb/
     │   └── userRoute.js
     └── middleware/
         └── verifyToken.js
+```
 
-Modelo de Datos
-Categoría
-name: String (requerido)
-description: String
-Producto
-name: String
-description: String
-price: Number
-stock: Number
-category: ObjectId (referencia a Categoría)
-👤 Usuario
-name: String
-email: String (único)
-password: String (encriptada)
-Autenticación
+---
 
-El sistema implementa autenticación mediante JWT.
+## Esquema de la DB
 
-Registro de usuario
-Login con generación de token
-Middleware de verificación de token para rutas protegidas
-Endpoints
-Usuarios
-Registro
+### Categoría
+| Campo | Tipo | Requerido |
+|---|---|---|
+| name | String | Sí |
+| description | String | No |
 
-POST /api/users/register
+### Producto
+| Campo | Tipo | Requerido |
+|---|---|---|
+| name | String | Sí |
+| description | String | No |
+| price | Number | Sí |
+| stock | Number | Sí |
+| category | ObjectId (ref: Category) | Sí |
 
+### Usuario
+| Campo | Tipo | Requerido |
+|---|---|---|
+| name | String | Sí |
+| email | String (único) | Sí |
+| password | String (encriptada con bcrypt) | Sí |
+
+---
+
+## Instalación y ejecución
+
+1. Clonar el repositorio:
+```bash
+git clone <url-del-repositorio>
+cd proyecto-crud-mongodb
+```
+
+2. Instalar dependencias:
+```bash
+npm install
+```
+
+3. Configurar variables de entorno. Copiar `.env.example` y renombrarlo a `.env`:
+```bash
+cp .env.example .env
+```
+Luego completar los valores en `.env` con tu URI de MongoDB y una clave secreta para JWT.
+
+4. Ejecutar el servidor en modo desarrollo:
+```bash
+npm run dev
+```
+
+O en modo producción:
+```bash
+npm start
+```
+
+El servidor estará disponible en `http://localhost:3000`.
+
+---
+
+## Autenticación
+
+Las rutas de creación, actualización y eliminación de productos y categorías están protegidas por JWT.
+
+Para acceder a ellas, incluir el token en el header:
+```
+Authorization: Bearer <token>
+```
+
+El token se obtiene al hacer login en `POST /api/users/login`.
+
+---
+
+## Endpoints
+
+### Usuarios
+
+| Método | Ruta | Descripción | Protegida |
+|---|---|---|---|
+| POST | /api/users/register | Registrar usuario | No |
+| POST | /api/users/login | Login y obtención de token | No |
+
+### Categorías
+
+| Método | Ruta | Descripción | Protegida |
+|---|---|---|---|
+| GET | /api/categories | Obtener todas las categorías | No |
+| GET | /api/categories/:id | Obtener categoría por ID | No |
+| POST | /api/categories | Crear categoría | Sí |
+| PUT | /api/categories/:id | Actualizar categoría | Sí |
+| DELETE | /api/categories/:id | Eliminar categoría | Sí |
+
+### Productos
+
+| Método | Ruta | Descripción | Protegida |
+|---|---|---|---|
+| GET | /api/products | Obtener todos los productos (con populate de categoría) | No |
+| GET | /api/products/:id | Obtener producto por ID | No |
+| POST | /api/products | Crear producto | Sí |
+| PUT | /api/products/:id | Actualizar producto | Sí |
+| DELETE | /api/products/:id | Eliminar producto | Sí |
+
+---
+
+## Ejemplos de datos Mock (POST)
+
+### Registrar usuario
+`POST /api/users/register`
+```json
 {
-  "name": "Usuario",
-  "email": "usuario@mail.com",
+  "name": "Agustín Moa",
+  "email": "agustin@mail.com",
   "password": "123456"
 }
-Login
+```
 
-POST /api/users/login
-
+### Login
+`POST /api/users/login`
+```json
 {
-  "email": "usuario@mail.com",
+  "email": "agustin@mail.com",
   "password": "123456"
 }
-Categorías
-Crear
+```
 
-POST /api/categories
-
-Obtener todas
-
-GET /api/categories
-
-Obtener por ID
-
-GET /api/categories/
-
-Actualizar
-
-PUT /api/categories/
-
-Eliminar
-
-DELETE /api/categories/
-
-Productos
-Crear
-
-POST /api/products
-
+### Crear categoría
+`POST /api/categories`
+```json
 {
-  "name": "Producto",
-  "description": "Descripción",
-  "price": 1000,
-  "stock": 10,
-  "category": "ID_CATEGORIA"
+  "name": "Electrónica",
+  "description": "Dispositivos electrónicos y accesorios"
 }
-Obtener todos
+```
 
-GET /api/products
+### Crear producto
+`POST /api/products`
+```json
+{
+  "name": "Auriculares Bluetooth",
+  "description": "Auriculares inalámbricos con cancelación de ruido",
+  "price": 15000,
+  "stock": 25,
+  "category": "ID_DE_CATEGORIA"
+}
+```
 
-Incluye populate de categoría
-
-Obtener por ID
-
-GET /api/products/
-
-Actualizar
-
-PUT /api/products/
-
-Eliminar
-
-DELETE /api/products/
-
-Características principales
-
-CRUD completo de productos y categorías
-Relación entre entidades (Producto → Categoría)
-Uso de populate para datos relacionados
-Encriptación de contraseñas con bcrypt
-Autenticación con JWT
-Arquitectura modular (Controllers + Services)
-Manejo de errores y códigos HTTP
-
+---
 
 Desarrollado por Agustín Federico Moa
